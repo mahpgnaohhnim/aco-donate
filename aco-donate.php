@@ -13,3 +13,5 @@ Author: mahpgnaohhnim
 Version: 1.0
 Author URI: https://github.com/mahpgnaohhnim
 */
+
+add_shortcode("aco_donate", "aco_donate_shortcode");
