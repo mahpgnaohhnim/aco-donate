@@ -16,8 +16,7 @@ Author URI: https://github.com/mahpgnaohhnim
 add_action('wp_head', 'add_aco_donation_css_style');
 add_action('wp_head', 'add_jQuery');
 add_action('wp_head', 'add_aco_slider_script');
-add_shortcode("aco_donate", "aco_donate_shortcode");
-
+add_shortcode("aco_donation", "aco_donate_shortcode");
 
 
 function aco_donate_shortcode(){
@@ -25,7 +24,7 @@ function aco_donate_shortcode(){
     $donationCurrency = getDonationCurrency();
 
     $donationInput = "<div>" .
-                        "<input name='donation-input' id='donation-input' placeholder='Donation' value='1' min='1' max='' autocomplete='off' type='number'>" .
+                        "<input name='donation-input' id='donation-input' placeholder='Donation' value='1' min='1' max='1000' autocomplete='off' pattern='[0-9]' type='number'>" .
                         "<span id='donation-currency'> ". $donationCurrency ."</span>".
                     "</div>";
 
@@ -58,13 +57,61 @@ function add_jQuery(){
 function add_aco_slider_script(){
     ?>
     <script>
-        $('document').ready(function(){
-            initSlider();
-        });
 
-        function initSlider(){
-            $('#slide-grip').draggable({ containment: "parent", axis: "x" });
-        }
+        $('document').ready(function(){
+            var grip;
+            var rail;
+            var startX;
+            var railLength;
+            var maxVal;
+            var donationInput;
+            init();
+
+            function init(){
+                initSlider();
+                initInput();
+                startX = rail[0].offsetLeft;
+                railLength = rail[0].offsetWidth - grip[0].offsetWidth;
+                maxVal = getMaxDonationValue();
+            }
+
+            function initInput(){
+                donationInput = document.getElementById("donation-input");
+                donationInput.addEventListener("keyup", onInputKeyup);
+            }
+
+            function initSlider(){
+                grip = $('#slide-grip').draggable({ containment: "parent", axis: "x" });
+                rail = $('#slide-rail');
+                grip.on("drag", onSlideDrag);
+            }
+
+            function onSlideDrag(e){
+                var currentX = e.target.offsetLeft - startX;
+                var percent = currentX/railLength;
+                var currentVal = Math.round(percent * maxVal);
+                donationInput.value = currentVal;
+
+            }
+
+            function onInputKeyup(){
+                var inputVal = donationInput.value;
+                if(inputVal !== ""){
+                    var percent = inputVal/maxVal;
+                    if(percent > 1){
+                        percent = 1;
+                    }
+                    newXPosition = startX + (percent*railLength)
+                    grip.css('left', newXPosition);
+                }
+
+            }
+
+            function getMaxDonationValue(){
+                var maxValue = donationInput.max;
+                return maxValue;
+            }
+        });
     </script>
     <?php
 }
@@ -92,6 +139,7 @@ function add_aco_donation_css_style(){
 
         #donation-slider{
             width: 100%;
+            margin-bottom: 20px;
         }
 
         #slide-rail{
