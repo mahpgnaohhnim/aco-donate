@@ -52,14 +52,14 @@ function aco_donate_shortcode($atts = [], $content = null){
 
     $donationForm = "<form target='_blank' name='Donation Form' action='https://www.paypal.com/cgi-bin/webscr' method='post'>" .
                         "<input type='hidden' name='cmd' value='_donations'>" .
-                        "<input name='business' value='mhpham1991@gmail.com' type='hidden'>" .
+                        "<input name='business' value='finance@asia-charity.de' type='hidden'>" .
                         "<input name='currency_code' value='EUR' type='hidden'>" .
                     $donationInput .
                     "<br>" .
                     $slider .
                     //"<input type='button' name='submit' alt='Make payments with PayPal - it\'s fast, free and secure!'>" .
                     "<br>" .
-                    "<input type=\"image\" src=\"http://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif\" border=\"0\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\">" .
+                    "<input type=\"image\" src=\"http://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\">" .
                     "</form>";
 
     return $content.$donationForm;
