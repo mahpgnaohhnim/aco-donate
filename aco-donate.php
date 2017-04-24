@@ -7,7 +7,7 @@
  */
 /*
 Plugin Name: ACO Donate
-Plugin URI: http://wordpress.org/plugins/hello-dolly/
+Plugin URI: https://github.com/mahpgnaohhnim/aco-donate
 Description: ACO Donation Plugin with Slider and Paypal payment
 Author: mahpgnaohhnim
 Version: 1.0
