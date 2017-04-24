@@ -13,18 +13,32 @@ Author: mahpgnaohhnim
 Version: 1.0
 Author URI: https://github.com/mahpgnaohhnim
 */
-add_action('wp_head', 'add_aco_donation_css_style');
-add_action('wp_head', 'add_jQuery');
-add_action('wp_head', 'add_aco_slider_script');
+
+
 add_shortcode("aco_donation", "aco_donate_shortcode");
 
+function aco_donate_shortcode($atts = [], $content = null){
 
-function aco_donate_shortcode(){
+    wp_enqueue_style('ACODonateSlider', plugin_dir_url( __FILE__ ).'assets/ACODonateSlider.css',false,'1.0','all');
+    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-1.12.4.js',false,'1.0',true);
+    wp_enqueue_script('jqueryUI', 'https://code.jquery.com/ui/1.12.1/jquery-ui.js',false,'1.0',true);
+    wp_enqueue_script( 'ACODonateSlider', plugin_dir_url( __FILE__ ) . 'assets/ACODonateSlider.js', array ( 'jquery' ), 1.0, true);
+
+    /*default values*/
+    $minDonateValue = 1;
+    $maxDonateValue = 1000;
+    /*if shortcode got params*/
+    if($atts["max"]){
+        $maxDonateValue = $atts["max"];
+    }
+    if($atts["min"]){
+        $minDonateValue = $atts["min"];
+    }
 
     $donationCurrency = getDonationCurrency();
 
     $donationInput = "<div>" .
-                        "<input name='donation-input' id='donation-input' placeholder='Donation' value='1' min='1' max='1000' autocomplete='off' pattern='[0-9]' type='number'>" .
+                        "<input name='amount' id='donation-input' placeholder='Donation' value='".$minDonateValue."' min='".$minDonateValue."' max='".$maxDonateValue."' autocomplete='off' pattern='[0-9]' type='number'>" .
                         "<span id='donation-currency'> ". $donationCurrency ."</span>".
                     "</div>";
 
@@ -32,137 +46,27 @@ function aco_donate_shortcode(){
                     "<div id='slide-rail'>" .
                         "<div id='slide-grip'></div>" .
                     "</div>" .
-                    "<span id='current-donation'></span>" .
-                    "<span id='max-donation'></span>" .
+                    "<span id='min-donation'>".$minDonateValue."</span>" .
+                    "<span id='max-donation'>".$maxDonateValue."</span>" .
                 "</div>";
 
-    $donationForm = $donationInput ."<br>". $slider;
+    $donationForm = "<form target='_blank' name='Donation Form' action='https://www.paypal.com/cgi-bin/webscr' method='post'>" .
+                        "<input type='hidden' name='cmd' value='_donations'>" .
+                        "<input name='business' value='mhpham1991@gmail.com' type='hidden'>" .
+                        "<input name='currency_code' value='EUR' type='hidden'>" .
+                    $donationInput .
+                    "<br>" .
+                    $slider .
+                    //"<input type='button' name='submit' alt='Make payments with PayPal - it\'s fast, free and secure!'>" .
+                    "<br>" .
+                    "<input type=\"image\" src=\"http://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif\" border=\"0\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\">" .
+                    "</form>";
 
-    echo $donationForm;
+    return $content.$donationForm;
+
 }
-
 
 function getDonationCurrency(){
     $currency = "€";
     return $currency;
-}
-
-function add_jQuery(){
-    ?>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <?php
-}
-
-function add_aco_slider_script(){
-    ?>
-    <script>
-
-        $('document').ready(function(){
-            var grip;
-            var rail;
-            var startX;
-            var railLength;
-            var maxVal;
-            var donationInput;
-            init();
-
-            function init(){
-                initSlider();
-                initInput();
-                startX = rail[0].offsetLeft;
-                railLength = rail[0].offsetWidth - grip[0].offsetWidth;
-                maxVal = getMaxDonationValue();
-            }
-
-            function initInput(){
-                donationInput = document.getElementById("donation-input");
-                donationInput.addEventListener("keyup", onInputKeyup);
-            }
-
-            function initSlider(){
-                grip = $('#slide-grip').draggable({ containment: "parent", axis: "x" });
-                rail = $('#slide-rail');
-                grip.on("drag", onSlideDrag);
-            }
-
-            function onSlideDrag(e){
-                var currentX = e.target.offsetLeft - startX;
-                var percent = currentX/railLength;
-                var currentVal = Math.round(percent * maxVal);
-                donationInput.value = currentVal;
-
-            }
-
-            function onInputKeyup(){
-                var inputVal = donationInput.value;
-                if(inputVal !== ""){
-                    var percent = inputVal/maxVal;
-                    if(percent > 1){
-                        percent = 1;
-                    }
-                    newXPosition = startX + (percent*railLength)
-                    grip.css('left', newXPosition);
-                }
-
-            }
-
-            function getMaxDonationValue(){
-                var maxValue = donationInput.max;
-                return maxValue;
-            }
-        });
-    </script>
-    <?php
-}
-
-
-function add_aco_donation_css_style(){
-    ?>
-    <style>
-        #donation-input,
-        #donation-currency{
-            font-size: 20px;
-        }
-
-        #donation-input{
-            display: inline-block;
-            width: 90%;
-            margin: 0 auto;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            text-align: right;
-            color: black;
-        }
-
-        #donation-slider{
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        #slide-rail{
-            height: 1px;
-            width: 100%;
-            background: darkgrey;
-        }
-
-        #slide-grip{
-            position: absolute;
-            height: 30px;
-            width:  30px;
-            border-radius: 50%;
-            background-color: #3490e0;
-            background-image: url("http://www.asia-charity.de/wp-content/uploads/2016/01/ACO_Vogel_W-250x250.png");
-            background-size: 24px;
-            background-repeat: no-repeat ;
-            background-position: 2px 5px;
-            margin-top: -15px;
-            cursor: pointer;
-        }
-
-
-    </style>
-    <?php
 }
