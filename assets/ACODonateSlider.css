@@ -1,0 +1,50 @@
+#donation-input,
+#donation-currency{
+    font-size: 20px;
+}
+
+#donation-input{
+    display: inline-block;
+    width: 90%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: right;
+    color: black;
+}
+
+#donation-slider{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#slide-rail{
+    height: 1px;
+    width: 100%;
+    background: darkgrey;
+    margin-bottom: 30px;
+}
+
+#slide-grip{
+    position: absolute;
+    height: 30px;
+    width:  30px;
+    border-radius: 50%;
+    background-color: #3490e0;
+    background-image: url("http://www.asia-charity.de/wp-content/uploads/2016/01/ACO_Vogel_W-250x250.png");
+    background-size: 24px;
+    background-repeat: no-repeat ;
+    background-position: 2px 5px;
+    margin-top: -15px;
+    cursor: pointer;
+}
+
+#min-donation{
+    float: left;
+}
+
+#max-donation{
+    float:right;
+}
