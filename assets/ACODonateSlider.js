@@ -62,7 +62,7 @@ jQuery('document').ready(function(){
 
     function adjustGripTopPosition(){
         var gripY = grip.css('top');
-        var railY = rail[0].offsetTop;1
+        var railY = rail[0].offsetTop;
         if(gripY !== railY){
             grip.css('top', railY);
         }
