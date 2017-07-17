@@ -57,9 +57,9 @@ function aco_donate_shortcode($atts = [], $content = null){
                     $donationInput .
                     "<br>" .
                     $slider .
-                    //"<input type='button' name='submit' alt='Make payments with PayPal - it\'s fast, free and secure!'>" .
                     "<br>" .
-                    "<input type=\"image\" src=\"http://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\">" .
+                    "<button type='submit' name='submit' >Spenden</button>" .
+                    //"<input type=\"image\" src=\"http://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\">" .
                     "</form>";
 
     return $content.$donationForm;
