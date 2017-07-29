@@ -8,12 +8,11 @@
 
 .labelCenter,
 #projDrop{
-    display: block;
-    margin: auto;
     width: 90%;
 }
+
 #donation-input{
-    display: block;
+    display: inline-block;
     width: 90%;
     margin: 0 auto;
     text-align: right;

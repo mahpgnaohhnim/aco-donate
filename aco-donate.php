@@ -79,7 +79,6 @@ function aco_donate_shortcode($atts = [], $content = null){
 }
 
 function getDonationCurrency(){
-    echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
-    echo '<h2>My Custom Submenu Page</h2>';
-    echo '</div>';
+    $currency = "€";
+    return $currency;
 }
