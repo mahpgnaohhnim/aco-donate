@@ -7,6 +7,7 @@
  */
 
 
+$options = get_option('aco_donation_options');
 ?>
 
 <style>
@@ -43,7 +44,6 @@
     <label>Delete Project:</label>
     <select name="deleteProject">
         <?php
-        $options = get_option('aco_donation_options');
         foreach ($options['projects'] as $project){
             echo "<option value='".$project."'>".$project."</option>";
 
@@ -57,13 +57,18 @@
 <table>
     <th>Projekte</th>
     <?php
-    $options = get_option('aco_donation_options');
     foreach ($options['projects'] as $project){
         echo "<tr><td>".$project."</td></tr>";
 
     }
     ?>
 </table>
+
+<form method="post" onsubmit="<?php saveGeneralSettings()?>">
+    <label>Button Text:</label>
+    <input type="text" name="ButtonText" value="<?php echo $options['btnText'] ?>">
+    <?php submit_button() ?>
+</form>
 
 
 

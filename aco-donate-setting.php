@@ -31,10 +31,8 @@ function saveProject() {
 
         if (!isset($options['projects'])) {
             $options['projects'] = array();
-            echo "isset";
         } else {
             $projArr = $options['projects'];
-            echo "notset";
         }
 
         $entryExist = checkEntry($projArr, $val);
@@ -64,9 +62,16 @@ function checkEntry($array, $value) {
     return $entryExist;
 }
 
+function saveGeneralSettings(){
+    if (isset($_POST["ButtonText"]) && $_POST["ButtonText"] != "") {
+        $options = get_option('aco_donation_options');
+        $options['btnText'] = $_POST["ButtonText"];
+        update_option('aco_donation_options', $options);
+    }
+}
+
 function acoDonationAdminPage() {
     //delete_option('aco_donation_options');
     add_option('aco_donation_options', array());
     include "aco-donate-settings-view.php";
-
 }

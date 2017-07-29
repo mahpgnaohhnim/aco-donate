@@ -20,6 +20,7 @@ add_shortcode("aco_donation", "aco_donate_shortcode");
 
 
 function aco_donate_shortcode($atts = [], $content = null){
+    $dbOptions = get_option('aco_donation_options');
 
     wp_enqueue_style('ACODonateSlider', plugin_dir_url( __FILE__ ).'assets/ACODonateSlider.css',false,'1.0','all');
     wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-1.12.4.js',false,'1.0',true);
@@ -69,7 +70,7 @@ function aco_donate_shortcode($atts = [], $content = null){
         "<br>" .
         $slider .
         "<br>" .
-        "<button type='submit' name='submit' >Spenden</button>" .
+        "<button type='submit' name='submit' >".$dbOptions['btnText'] ."</button>" .
         //"<input type=\"image\" src=\"http://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\">" .
         "</form>";
 
