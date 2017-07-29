@@ -54,8 +54,17 @@ function aco_donate_shortcode($atts = [], $content = null){
 
     $donationForm = "<form target='_blank' name='Donation Form' action='https://www.paypal.com/cgi-bin/webscr' method='post'>" .
         "<input type='hidden' name='cmd' value='_donations'>" .
+        "<input type='hidden' name='return' value='". $returnPage ."' />" .
         "<input name='business' value='finance@asia-charity.de' type='hidden'>" .
         "<input name='currency_code' value='EUR' type='hidden'>" .
+        "<label>Project auswählen:</label>".
+        "<select name='item_name'>";
+        $options = get_option('aco_donation_options');
+        foreach ($options['projects'] as $project){
+            $donationForm .= "<option value='Spende: ".$project."'>".$project."</option>";
+
+        };
+        $donationForm .= "</select>".
         $donationInput .
         "<br>" .
         $slider .
