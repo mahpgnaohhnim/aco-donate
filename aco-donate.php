@@ -57,7 +57,7 @@ function aco_donate_shortcode($atts = [], $content = null){
         "<input type='hidden' name='return' value='". $returnPage ."' />" .
         "<input name='business' value='finance@asia-charity.de' type='hidden'>" .
         "<input name='currency_code' value='EUR' type='hidden'>" .
-        "<label>Project auswählen:</label>".
+        "<label class='labelCenter'>Project auswählen:</labelid>".
         "<select id='projDrop' name='item_name'>";
         $options = get_option('aco_donation_options');
         foreach ($options['projects'] as $project){

@@ -2,7 +2,11 @@
 #donation-currency{
     font-size: 20px;
 }
+.labelCenter{
+    text-align: center;
+}
 
+.labelCenter,
 #projDrop{
     display: block;
     margin: auto;
